@@ -11,6 +11,7 @@ module.exports = {
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
   organizationName: 'TheReconPilot', // Usually your GitHub org/user name.
+  trailingSlash: false,
   projectName: 'rl-notes', // Usually your repo name.
   themeConfig: {
     navbar: {
