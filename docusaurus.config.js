@@ -14,6 +14,9 @@ module.exports = {
   trailingSlash: false,
   projectName: 'rl-notes', // Usually your repo name.
   themeConfig: {
+    colorMode: {
+      respectPrefersColorScheme: true
+    },
     navbar: {
       title: 'Reinforcement Learning Notes',
       logo: {
