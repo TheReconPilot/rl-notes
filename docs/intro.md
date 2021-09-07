@@ -1,4 +1,5 @@
 ---
+title: Reinforcement Learning
 sidebar_position: 1
 slug: /
 ---
