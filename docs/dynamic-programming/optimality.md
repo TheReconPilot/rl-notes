@@ -30,7 +30,7 @@ $$
 
 This is called the **Bellman expectation equation**.
 
-:::tip Bellman Expectation Equation for State-Value.
+:::tip Bellman Expectation Equation for State-Value Function
 
 $$
 
@@ -61,7 +61,7 @@ q_{\pi}(s, a) &= \mathbb{E}_{\pi}[G_t | S_t = s, A_t = a] \\ \\
 \end{aligned}
 $$
 
-:::tip Bellman Expectation Equation for State-Value.
+:::tip Bellman Expectation Equation for Action-Value Function
 
 $$
 
