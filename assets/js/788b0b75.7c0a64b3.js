@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkrl_notes=self.webpackChunkrl_notes||[]).push([[654],{4940:function(s){s.exports={blogPosts:[]}}}]);
