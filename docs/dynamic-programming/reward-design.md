@@ -18,7 +18,8 @@ Let the sequence of **rewards** at and after time step $t$ be $R_t, R_{t+1}, R_{
 The cumulative reward is called **return**.
 
 $$
-G_T = R_t + R_{t+_1} + \dots + R_T
+\large
+G_t = R_t + R_{t+1} + \dots + R_T
 $$
 
 ---
@@ -34,6 +35,7 @@ $$
     - R = +1 for each second the system is cool
 
 $$
+\large
 G_t = 1 + 1 + 0 + 0 + 1 + 1 + 1 + 0 + 1 + \dots = \sum\limits_{t=1}^{\infty} = \infty
 $$
 
@@ -96,6 +98,7 @@ This discounting **reduces the significance of rewards farther in the future**.
 Discounting makes sums finite.
 
 $$
+\large
 G_0 = \sum\limits_{k = 0}^{\infty} \gamma^k = \frac{1}{1-\gamma}
 $$
 
@@ -105,7 +108,8 @@ $$
 
 :::tip Mathematical Convenience
 $$
+\Large
 G_t = R_t + \gamma (R_{t+1} + \gamma R_{t+1} + \dots) \\ \ \\ 
-\implies \boxed{G_t = R_t + G_{t+1}}
+\implies \boxed{G_t = R_t + \gamma\ G_{t+1}}
 $$
 :::
