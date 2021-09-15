@@ -37,7 +37,7 @@ $$
 
 - Input $\pi$, the policy to be evaluated
 - Initialize an array $v(s) = 0$, for all $s \in S$
-- Repeat until $\Delta \le \theta$ (a small positive threshold)
+- Repeat until $\Delta < \theta$ (a small positive threshold)
     - $\Delta \gets 0$
     - For each $s \in S$:
         - $\large v_{old}(s) \gets v(s)$
@@ -97,10 +97,72 @@ If $v_{*}(s)$ is known:
 
 $$
 \large
-\pi_{*}(s) \gets \argmax_{a} \overbrace{\sum\limits_{r, s} p(r, s' | s, a)[r + \gamma v_{*}(s')]}^{q_{*}(s, a)} 
+\pi_{*}(s) \gets \argmax_{a} \overbrace{\sum\limits_{r, s'} p(r, s' | s, a)[r + \gamma v_{*}(s')]}^{q_{*}(s, a)} 
 $$
 
 :::
 
 So, if the model dynamics are unknown, i.e. $p(r, s' | s, a)$ are unknown, then we cannot recover an optimal policy from $v_{*}$, and we need to rely on $q_{*}$.
 
+---
+
+## Generalized Policy Iteration
+
+**Generalized Policy Iteration**
+1. Evaluate given policy
+2. Improve policy by acting greedily with respect to its value function
+
+**Policy Iteration**
+1. Evaluate policy until convergence (with some tolerance)
+2. Improve Policy
+
+**Value Iteration**
+1. Evaluate policy only with a single iteration
+2. Improve policy
+
+### Policy Iteration
+
+:::danger Policy Iteration Scheme
+
+1. Initialize $v(s)$ and $\pi(s)$ arbitrarily for all $s \in S$
+2. Perform policy evaluation
+3. Policy improvement:
+    - `policy_stable` $\gets$ true
+    - For each $s \in S$:
+        - `old_action` $\gets \pi(s)$
+        - $\large \pi(s) \gets \argmax\limits_{a} \overbrace{\sum\limits_{s', r} p(s', r | s, a)[r + \gamma v(s')]}^{q(s, a)}$
+        - If `old_action` $\neq \pi(s)$, then `policy_stable` $\gets$ false
+    - If `policy_stable`, then stop and return $v \approx v_*$ and $\pi \approx \pi_*$, else go to Step 2
+
+:::
+
+### Value Iteration
+
+:::danger Value Iteration Scheme
+
+- Initialize array $v$ arbitrarily
+    - For example, $v(s) = 0$ for all $s \in S$
+- Repeat until $\Delta < \theta$ (a small positive threshold)
+    - $\Delta \gets 0$
+    - For each $s \in S$:
+        - $\large v_{old}(s) \gets v(s)$
+        - $\large \boxed{v(s) \gets \max\limits_{a} \sum\limits_{s', r} p(s', r | s, a) [r + \gamma v(s')]}$ (Bellman optimality equation)
+        - $\large \Delta \gets \max (\Delta, |v_{old}(s) - v(s)|$
+- Output a deterministic policy, $\pi \approx \pi_*$, such that
+$$
+\large
+\pi(s) = \argmax_{a} \sum\limits_{s', r} p(s', r | s, a)[r + \gamma v(s')]
+$$
+:::
+
+---
+
+### Comparison of Policy Iteration and Value Iteration
+
+**Policy Iteration (PI)**
+- PI is slower per cycle - $O(|A|\ |S|^2 + |S|^3)$
+- PI requires few cycles
+
+**Value Iteration (VI)** 
+- VI is faster per cycle - $O(|A|\ |S|^2)$
+- VI requires many cycles
