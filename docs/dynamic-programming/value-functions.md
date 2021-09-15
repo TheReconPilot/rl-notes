@@ -111,4 +111,4 @@ Source: Practical RL, HSE University
 
 ---
 
-With Bellmann expectation equations, we can assess policy performance.
+With Bellman expectation equations, we can assess policy performance.
