@@ -27,8 +27,41 @@ The **optimal policy** is the one that is better than or equal to all the other 
 For the state-action pair $(s, a)$, this gives the expected return for taking the action $a$ in state $s$ and thereafter following an optimal policy.
 
 $$
+\large
 v_{*}(s) = \max_{\pi} v_{\pi}(s) \\ \ \\
 q_{*}(s, a) = \max_{\pi} q_{\pi}(s, a)
 $$
 
 In any finite MDP, there is always at least one deterministic optimal policy.
+
+## Bellman optimality equation for $v_{*}(s)$
+
+![](https://i.imgur.com/himPww0.png)
+
+Source: Practical RL, HSE University
+
+:::tip Equations
+$$
+\Large
+\begin{aligned}
+v_{*}(s) &= \max_{a} \sum\limits_{r, s'} p(r, s' | s, a)[r + \gamma v_{*}(s')] \\
+         &= \max_{a}\ \mathbb{E}_{\pi}\left[R_t + \gamma v_{*}(S_{t+1})|S_t = s, A_t = a\right]
+\end{aligned}
+$$
+:::
+
+## Bellman optimality equation for $q_{*}(s, a)$
+
+![](https://i.imgur.com/hKpu9YG.png)
+
+Source: Practical RL, HSE University
+
+:::tip equations
+$$
+\Large
+\begin{aligned}
+q_{*}(s, a) &= \mathbb{E}_{\pi}\left[R_t + \gamma \max_{a'} q_{*}(S_{t+1}, a')|S_t = s, A_t = a\right] \\
+            &= \sum\limits_{r, s'} p(r, s' | s, a) \left[ r + \gamma \max_{a'} q_{*}(s', a') \right]
+\end{aligned}
+$$
+:::
