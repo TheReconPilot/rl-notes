@@ -42,7 +42,7 @@ $$
     - For each $s \in S$:
         - $\large v_{old}(s) \gets v(s)$
         - $\large \boxed{v(s) \gets \sum\limits_{a} \pi(a | s) \sum\limits_{s', r} p(s', r | s, a) [r + \gamma v(s')]}$ (Bellman expectation equation)
-        - $\large \Delta \gets \max (\Delta, |v_{old}(s) - v(s)|$
+        - $\large \Delta \gets \max (\Delta, |v_{old}(s) - v(s)|)$
 - Output $v \approx v_{\pi}$
 :::
 
@@ -147,7 +147,7 @@ So, if the model dynamics are unknown, i.e. $p(r, s' | s, a)$ are unknown, then 
     - For each $s \in S$:
         - $\large v_{old}(s) \gets v(s)$
         - $\large \boxed{v(s) \gets \max\limits_{a} \sum\limits_{s', r} p(s', r | s, a) [r + \gamma v(s')]}$ (Bellman optimality equation)
-        - $\large \Delta \gets \max (\Delta, |v_{old}(s) - v(s)|$
+        - $\large \Delta \gets \max (\Delta, |v_{old}(s) - v(s)|)$
 - Output a deterministic policy, $\pi \approx \pi_*$, such that
 $$
 \large
