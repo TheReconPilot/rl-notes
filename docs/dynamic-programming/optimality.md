@@ -22,7 +22,7 @@ $$
 
 The **optimal policy** is the one that is better than or equal to all the other policies. There may be multiple optimal policies. We denote it by $v_{*}$.
 
-**Optimal policies also share the same optimal optimal action-value function**, denoted by $q_{*}$. 
+**Optimal policies also share the same optimal action-value function**, denoted by $q_{*}$. 
 
 For the state-action pair $(s, a)$, this gives the expected return for taking the action $a$ in state $s$ and thereafter following an optimal policy.
 

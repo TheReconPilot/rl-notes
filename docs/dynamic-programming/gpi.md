@@ -19,9 +19,9 @@ Generalized Policy Iteration is the general idea of letting *policy evaluation* 
 
 ---
 
-## Policy Evalutation (Prediction)
+## Policy Evaluation (Prediction)
 
-**Policy Evalutation**, also called **Prediction** is predicting the value function for a particular policy.
+**Policy Evaluation**, also called **Prediction** is predicting the value function for a particular policy.
 
 The Bellman expectation equation is basically a system of linear equations where the number of unknowns is equal to the number of equations and number of states.
 
@@ -59,7 +59,7 @@ One way to go about this is taking an action $a$ not recommended by the current 
 :::danger Policy Improvement
 $$
 \Large
-\pi'(s) \gets \argmax_{a} \overbrace{\sum\limits_{r, s} p(r, s' | s, a)[r + \gamma v_{\pi}(s')]}^{q_{\pi}(s, a)}
+\pi'(s) \gets \argmax_{a} \overbrace{\sum\limits_{r, s'} p(r, s' | s, a)[r + \gamma v_{\pi}(s')]}^{q_{\pi}(s, a)}
 $$
 :::
 
