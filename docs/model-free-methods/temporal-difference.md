@@ -46,7 +46,7 @@ Q-learning is a TD method.
 - Loop:
     - Sample $< s, a, r, s' >$ from the environment
     - Compute $\large\hat{Q}(s, a) = r(s, a) + \gamma \max\limits_{a'}Q(s', a')$
-    - Update $\large\hat{Q}(s, a) \gets \alpha \hat{Q}(s, a) + (1-\alpha) Q(s, a)$
+    - Update $\large Q(s, a) \gets \alpha \hat{Q}(s, a) + (1-\alpha) Q(s, a)$
 
 Even before we finish our first trajectory, we would end up with something better than random Q-values. This is helpful in situations where we have infinite processing or situations with no apparent termination criteria for the session.
 
@@ -108,7 +108,7 @@ It is in situations like this that SARSA method comes in.
 We follow the same update rule:
 
 $$
-\large\hat{Q}(s, a) \gets \alpha \hat{Q}(s, a) + (1-\alpha) Q(s, a)
+\large Q(s, a) \gets \alpha \hat{Q}(s, a) + (1-\alpha) Q(s, a)
 $$
 
 The difference comes in how we compute $\hat{Q}(s, a)$.
