@@ -82,3 +82,70 @@ P_t(a) = \frac{\exp\left(\frac{q_t(a)}{\tau}\right)}{\sum\limits_{i=1}^{n} \exp\
 $$
 
 The parameter $\tau$ is called a *temperature parameter*. For high temperatures ($\tau \to \infty$), all actions have nearly the same probability, and the lower the temperature, the actions with higher expected rewards have higher probability. For a low temperature ($\tau \to 0^+$), the probability of the action with the highest expected reward tends to 1.
+
+---
+
+## SARSA
+
+### Cliff Walking - Example
+
+![](https://i.imgur.com/JQ7FC4K.png)
+
+We have a robot, wanting to reach from the yellow point to the green point, and it is on a cliff.
+
+The red squares depict falling off the cliff with a negative reward. 
+
+There is a shorter path (red arrow) which leads us to the destination faster, but has a higher risk (falling off while exploring). And there is a longer, but much safer path (green arrow), which has a lower return [because of discounting by gamma].
+
+While using Q-Learning, our robot learns to use the shorter path, but also likely falls down often.
+
+Robots are expensive, we would be better off with having a safer path, even if it is somewhat longer. We don't want to rebuild one everytime it falls off the cliff.
+
+It is in situations like this that SARSA method comes in.
+
+### The Method
+
+We follow the same update rule:
+
+$$
+\large\hat{Q}(s, a) \gets \alpha \hat{Q}(s, a) + (1-\alpha) Q(s, a)
+$$
+
+The difference comes in how we compute $\hat{Q}(s, a)$.
+
+**Q-Learning**
+
+$\large\hat{Q}(s, a) = r(s, a) + \gamma \max\limits_{a'}Q(s', a')$
+
+**SARSA**
+
+$\large\hat{Q}(s, a) = r(s, a) + \gamma Q(s', a')$
+
+I may not have written it in a mathematically rigorous sense, but the idea is that
+
+This is also called an *on-policy* control method, while Q-learning is called an *off-policy* control method.
+
+- In Q-Learning, we sample $<s, a, r, s'>$ from the environment, then we use a max operator over all $a'$ to find the best action in a greedy sense.
+- In SARSA, we sample $<s, a, r, s', a'>$ (hence the name) and use it directly. We follow the policy.
+
+
+The idea of SARSA is well-explained in [a StackOverflow answer by Dennis Soemers](https://stackoverflow.com/a/49390009).
+
+> - SARSA uses the behaviour policy (meaning, the policy used by the agent to generate experience in the environment, which is typically $\varepsilon$-greedy) to select an additional action $a'$, and then uses $Q(s', a')$ (discounted by $\gamma$) as expected future returns in the computation of the update target.
+> - Q-learning does not use the behaviour policy to select an additional action $a'$. Instead, it estimates the expected future returns in the update rule as $\max\limits_{a'}Q(s', a')$. The max operator used here can be viewed as "following" the completely greedy policy. The agent is not actually following the greedy policy though; it only says, in the update rule, "suppose that I would start following the greedy policy from now on, what would my expected future returns be then?".
+
+> **What does it mean intuitively?**
+
+> - SARSA will converge to a solution that is optimal under the assumption that we keep following the same policy that was used to generate the experience. This will often be a policy with some element of (rather "stupid") randomness, like epsilon-greedy, because otherwise we are unable to guarantee that we'll converge to anything at all.
+
+> - Q-Learning will converge to a solution that is optimal under the assumption that, after generating experience and training, we switch over to the greedy policy.
+
+> **When to use which algorithm?**
+
+> An algorithm like Sarsa is typically preferable in situations where we care about the agent's performance during the process of learning / generating experience.
+
+Like, the expensive robot, which we don't want to fall off a cliff too often during learning.
+
+> An algorithm like Q-learning would be preferable in situations where we do not care about the agent's performance during the training process, but we just want it to learn an optimal greedy policy that we'll switch to eventually. Consider, for example, that we play a few practice games (where we don't mind losing due to randomness sometimes), and afterwards play an important tournament (where we'll stop learning and switch over from epsilon-greedy to the greedy policy). This is where Q-learning would be better.
+
+Another useful answer on [When to choose SARSA vs Q-Learning by Neil Slater](https://stats.stackexchange.com/questions/326788/when-to-choose-sarsa-vs-q-learning)
