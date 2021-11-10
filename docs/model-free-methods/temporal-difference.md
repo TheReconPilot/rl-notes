@@ -91,7 +91,7 @@ The parameter $\tau$ is called a *temperature parameter*. For high temperatures 
 
 ![](https://i.imgur.com/JQ7FC4K.png)
 
-We have a robot, wanting to reach from the yellow point to the green point, and it is on a cliff.
+We have a robot, wanting to reach from the yellow square to the green square, and it is on a cliff.
 
 The red squares depict falling off the cliff with a negative reward. 
 
@@ -121,9 +121,9 @@ $\large\hat{Q}(s, a) = r(s, a) + \gamma \max\limits_{a'}Q(s', a')$
 
 $\large\hat{Q}(s, a) = r(s, a) + \gamma Q(s', a')$
 
-I may not have written it in a mathematically rigorous sense, but the idea is that
-
 This is also called an *on-policy* control method, while Q-learning is called an *off-policy* control method.
+
+On-policy simply means using the current policy (i.e. do actions recommended by the current policy). Off-policy means we may use some action not recommended by the current policy, or maybe use a different policy altogether (say, a sample run from an expert) for training.
 
 - In Q-Learning, we sample $<s, a, r, s'>$ from the environment, then we use a max operator over all $a'$ to find the best action in a greedy sense.
 - In SARSA, we sample $<s, a, r, s', a'>$ (hence the name) and use it directly. We follow the policy.
@@ -131,13 +131,14 @@ This is also called an *on-policy* control method, while Q-learning is called an
 
 The idea of SARSA is well-explained in [a StackOverflow answer by Dennis Soemers](https://stackoverflow.com/a/49390009).
 
-> - SARSA uses the behaviour policy (meaning, the policy used by the agent to generate experience in the environment, which is typically $\varepsilon$-greedy) to select an additional action $a'$, and then uses $Q(s', a')$ (discounted by $\gamma$) as expected future returns in the computation of the update target.
-> - Q-learning does not use the behaviour policy to select an additional action $a'$. Instead, it estimates the expected future returns in the update rule as $\max\limits_{a'}Q(s', a')$. The max operator used here can be viewed as "following" the completely greedy policy. The agent is not actually following the greedy policy though; it only says, in the update rule, "suppose that I would start following the greedy policy from now on, what would my expected future returns be then?".
+> - **SARSA** uses the behaviour policy (meaning, the policy used by the agent to generate experience in the environment, which is typically $\varepsilon$-greedy) to select an additional action $a'$, and then uses $Q(s', a')$ (discounted by $\gamma$) as expected future returns in the computation of the update target.
+> 
+> - **Q-Learning** does not use the behaviour policy to select an additional action $a'$. Instead, it estimates the expected future returns in the update rule as $\max\limits_{a'}Q(s', a')$. The max operator used here can be viewed as "following" the completely greedy policy. **The agent is not actually following the greedy policy** though; it only says, in the update rule, "suppose that I would start following the greedy policy from now on, what would my expected future returns be then?".
 
 > **What does it mean intuitively?**
 
 > - SARSA will converge to a solution that is optimal under the assumption that we keep following the same policy that was used to generate the experience. This will often be a policy with some element of (rather "stupid") randomness, like epsilon-greedy, because otherwise we are unable to guarantee that we'll converge to anything at all.
-
+>
 > - Q-Learning will converge to a solution that is optimal under the assumption that, after generating experience and training, we switch over to the greedy policy.
 
 > **When to use which algorithm?**
@@ -149,3 +150,33 @@ Like, the expensive robot, which we don't want to fall off a cliff too often dur
 > An algorithm like Q-learning would be preferable in situations where we do not care about the agent's performance during the training process, but we just want it to learn an optimal greedy policy that we'll switch to eventually. Consider, for example, that we play a few practice games (where we don't mind losing due to randomness sometimes), and afterwards play an important tournament (where we'll stop learning and switch over from epsilon-greedy to the greedy policy). This is where Q-learning would be better.
 
 Another useful answer on [When to choose SARSA vs Q-Learning by Neil Slater](https://stats.stackexchange.com/questions/326788/when-to-choose-sarsa-vs-q-learning)
+
+## Expected SARSA
+
+In Expected SARSA, we replace the max operator of Q-Learning with an Expectation over the actions. Here's the comparison.
+
+**Q-Learning**
+
+$\large\hat{Q}(s, a) = r(s, a) + \gamma \max\limits_{a'}Q(s', a')$
+
+**SARSA**
+
+$\large\hat{Q}(s, a) = r(s, a) + \gamma Q(s', a')$
+
+**Expected SARSA**
+
+$$
+\large
+\begin{aligned}
+    \hat{Q}(s, a) &= r(s, a) + \gamma \mathbb{E}_{a'}[Q(s', a')] \\ \\
+                  &= r(s, a) + \gamma \sum\limits_{a'} \pi(a' | s') Q(s', a')
+\end{aligned}
+$$
+
+The update rule is the same as before.
+
+From the book:
+
+> Expected SARSA is more computationally expensive than SARSA, but in return, it eliminates the variance due to the random selection of $a'$. Given the same amount of experience, we might expect it to perform slightly better than SARSA, and indeed it generally does.
+
+![](https://i.imgur.com/yGdgAZc.png)
