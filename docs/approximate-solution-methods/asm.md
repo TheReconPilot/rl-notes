@@ -58,7 +58,7 @@ $$
 \end{aligned}
 $$
 
-**Sampled based Estimated of Goals $g(s)$, $g(s, a)$**
+**Sample based Estimates of Goals $g(s)$, $g(s, a)$**
 $$
 \large
 \begin{aligned}
@@ -78,7 +78,7 @@ $$
 \end{aligned}
 $$
 
-**Sampled based Estimated of Goals $g(s)$, $g(s, a)$**
+**Sample based Estimates of Goals $g(s)$, $g(s, a)$**
 $$
 \large
 \begin{aligned}
