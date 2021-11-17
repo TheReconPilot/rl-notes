@@ -114,3 +114,34 @@ Some definitions again:
 - **Behaviour** policy is the same as **Target** policy
 :::
 
+### Minimizing Loss with Gradient Descent
+
+$$
+\large
+\mathcal{L}(\bold{w}) = \frac{1}{2} \sum\limits_{s, a} \rho_{\pi}(s, a) \overbrace{[g(s, a) - \hat{q}_{\pi}(s, a, \bold{w})]^2}^{\mathcal{L}_{s, a}(\bold{w})}
+$$
+
+**Gradient Descent (GD)**
+
+$$
+\large
+\bold{w} \gets \bold{w} - \alpha \nabla_{\bold{w}} \mathcal{L}(\bold{w})
+$$
+
+where
+
+$$
+\large
+\nabla_{\bold{w}} \mathcal{L}(\bold{w}) = \left(\frac{\partial \mathcal{L}(\bold{w})}{\partial w_1}, \frac{\partial \mathcal{L}(\bold{w})}{\partial w_2}, \dots, \frac{\partial \mathcal{L}(\bold{w})}{\partial w_d} \right)^\intercal
+$$
+<!-- 
+**Stochastic Gradient Descent (SGD)**
+
+- On-policy: $s, a \sim \rho_{\pi}$
+- Off-policy: $s, a \sim \rho_{b}$ (b = behaviour policy)
+
+$$
+\large
+\bold{w} \gets \bold{w} - \alpha \nabla_{\bold{w}} \mathcal{L}_{s, a}(\bold{w})
+$$ -->
+
