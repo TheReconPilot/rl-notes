@@ -180,3 +180,19 @@ From the book:
 > Expected SARSA is more computationally expensive than SARSA, but in return, it eliminates the variance due to the random selection of $a'$. Given the same amount of experience, we might expect it to perform slightly better than SARSA, and indeed it generally does.
 
 ![](https://i.imgur.com/yGdgAZc.png)
+
+---
+
+## Experience Replay
+
+The idea of Experience Replay is to store several past interactions $<s, a, r, s'>$.
+
+- Play 1 step and record it
+- Pick N random transitions to train
+
+The advantage is that we don't need to re-visit $(s, a)$ as many times to learn.
+
+This only works with off-policy algorithms. For example, we could use Experience Replay on Q-Learning.
+
+Q-Learning with Experience Replay converges to a solution faster. There isn't much of a difference in end result, just the convergence rate.
+
