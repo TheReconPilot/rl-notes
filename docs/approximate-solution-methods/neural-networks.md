@@ -17,6 +17,17 @@ Each node (or artificial neuron) connects to another (in the neighbouring layer)
 ![](https://i.imgur.com/eUlQVcb.jpg)
 
 
+$$
+\large
+y = \sum_{i=1}^{m} w_i x_i + \textsf{bias}
+$$
 
+The Activation Function which we generally use is called ReLU (Rectified Linear Unit)
+
+$$
+\textsf{ReLU}(x) = \max(0, x)
+$$
+
+Finally, we define some kind of Cost Function based on MSE and do SGD to converge to a solution (for weights).
 
 Reference: https://www.ibm.com/in-en/cloud/learn/neural-networks
