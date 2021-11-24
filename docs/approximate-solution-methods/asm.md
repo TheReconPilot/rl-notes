@@ -134,7 +134,7 @@ $$
 \large
 \nabla_{\bold{w}} \mathcal{L}(\bold{w}) = \left(\frac{\partial \mathcal{L}(\bold{w})}{\partial w_1}, \frac{\partial \mathcal{L}(\bold{w})}{\partial w_2}, \dots, \frac{\partial \mathcal{L}(\bold{w})}{\partial w_d} \right)^\intercal
 $$
-<!-- 
+
 **Stochastic Gradient Descent (SGD)**
 
 - On-policy: $s, a \sim \rho_{\pi}$
@@ -143,5 +143,65 @@ $$
 $$
 \large
 \bold{w} \gets \bold{w} - \alpha \nabla_{\bold{w}} \mathcal{L}_{s, a}(\bold{w})
-$$ -->
+$$
 
+Gradient Descent can become computationally heavy, due to computing many squares and derivatives. It is slow on large data.
+
+In Stochastic Gradient Descent (SGD), we reduce some of this computational complexity by simplifying some aspect. For example, in the case of regression, there is a method called *mini-batch SGD*, where we sample multiple points instead of just one at each iteration of the computation. This reduces the accuracy of the gradient, but gives a good speed boost.
+
+Here, in RL, we simply **assume that the states appear in the examples with the same distribution.** In other words, we let go of the $\rho_\pi{(s, a)}$.
+
+### Stochastic Semi-Gradient
+
+We further simplify computation by treating the goals as fixed:
+
+$$
+\large
+\nabla_{\bold{w}} g(s, a) = 0
+$$
+
+So,
+
+$$
+\large
+\begin{aligned}
+\bold{w} &\gets \bold{w} - \alpha \nabla_{\bold{w}} \mathcal{L}_{s, a}(\bold{w}) \\ \\
+\bold{w} &\gets \bold{w} + \alpha\left[ g(s, a) - \hat{q}_{\pi}(s, a, \bold{w}) \right] \nabla_{\bold{w}} \hat{q}_{\pi}(s, a, \bold{w})
+\end{aligned}
+$$
+
+Stochastic Semi-Gradient Descent
+- Treats goals $g(s, a)$ as fixed numbers
+- Changes parameters to move estimates closer to targets
+- Is not a proper gradient
+    - No SGD's theoretical convergence properties
+    - Converges reliably in most cases
+    - More computationally efficient than SGD
+
+
+:::note Targets
+
+**SARSA**
+
+$$
+\large
+g(s, a) = R(s, a) + \gamma \hat{q}_{\pi}(S_{t+1}, A_{t+1}, \bold{w})
+$$
+
+
+**Expected SARSA**
+
+$$
+\large
+g(s, a) = R(s, a) + \gamma \sum_{a} \pi(a | S_{t+1}) \hat{q}_{\pi}(S_{t+1}, a, \bold{w})
+$$
+
+
+**Q-Learning**
+
+$$
+\large
+g(s, a) = R(s, a) + \gamma \max\limits_{a} \hat{q}_{\pi}(S_{t+1}, a, \bold{w})
+$$
+
+:::
