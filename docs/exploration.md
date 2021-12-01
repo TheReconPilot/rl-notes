@@ -37,7 +37,7 @@ There are multiple strategies.
 
 We take random action with probability $\epsilon$, otherwise the current optimal action.
 
-The regret of this strategy grows linearly with time. This is because $epsilon$ is constant at every time step. Even if we have learned the optimal strategy, we still keep exploring random actions with a given probability. And so, the regret keeps growing.
+The regret of this strategy grows linearly with time. This is because $\epsilon$ is constant at every time step. Even if we have learned the optimal strategy, we still keep exploring random actions with a given probability. And so, the regret keeps growing.
 
 ### $\epsilon$-greedy with discounting
 
@@ -172,5 +172,7 @@ The advantage of Bayesian UCB over UCB is that we can choose any distribution we
 However, it could happen that the Prior does not work at all in the given situation. Without proper domain knowledge, Bayesian UCB may not perform as well. For example, we choose a unimodal prior when in reality the distribution looks like bimodal.
 
 ## Comparing Regret
+
+Regret compared on three strategies, on a Bernoulli Bandit.
 
 ![](https://i.imgur.com/J8pcuvk.png)
