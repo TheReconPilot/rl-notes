@@ -50,7 +50,7 @@ $$
 
 This strategy converges to the optimal policy, so regret eventually stops growing (theoretically).
 
-An alternative strategy to reduce $\epsilon$ is to reduce it linearyly. For example, subtract, say, 0.05 from $\epsilon$ at each time step. $\epsilon$ eventually becomes zero. This linear reduction does not guarantee convergence to optimal policy (as we may not have explored optimal actions before our $\epsilon$ became zero), however, in practice, with proper tuning, this generally works.
+An alternative strategy to reduce $\epsilon$ is to reduce it linearly. For example, subtract, say, 0.05 from $\epsilon$ at each time step. $\epsilon$ eventually becomes zero. This linear reduction does not guarantee convergence to optimal policy (as we may not have explored optimal actions before our $\epsilon$ became zero), however, in practice, with proper tuning, this generally works.
 
 ### Softmax / Boltzman
 
@@ -75,9 +75,9 @@ This is more or less because $\epsilon$-greedy brings a lot of repeated explorat
 
 **We want to try actions if we believe there's a chance they turn out optimal.**
 
-### Thomson Sampling
+### Thompson Sampling
 
-Suppose we somehow know the probability distributions of $Q(s, a)$ values for multiple actions $a$. Thomson Sampling simply does the following:
+Suppose we somehow know the probability distributions of $Q(s, a)$ values for multiple actions $a$. Thompson Sampling simply does the following:
 
 - Sample once from each $Q$ distribution
 - Take argmax over the samples
