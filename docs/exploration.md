@@ -75,6 +75,16 @@ This is more or less because $\epsilon$-greedy brings a lot of repeated explorat
 
 **We want to try actions if we believe there's a chance they turn out optimal.**
 
+### Thomson Sampling
+
+Suppose we somehow know the probability distributions of $Q(s, a)$ values for multiple actions $a$. Thomson Sampling simply does the following:
+
+- Sample once from each $Q$ distribution
+- Take argmax over the samples
+
+We pick the action whose sampled $Q$ value is the largest.
+
+
 Continuing from that, we also want to explore actions that haven't been explored properly yet. So, an idea could be to **prioritize actions with uncertain outcomes**. This is also known as the *optimism in the face of uncertainty* idea.
 
 ### UCB (Upper Confidence Bounds)
@@ -105,6 +115,45 @@ $$
 
 We could use any of the other inequalities, like Chebyshev Inequality, for example.
 
+#### UCB-1 for Bandits
+
+Let's revisit the Multi Armed Bandit again, this time a bit more formally.
+
+:::info Multi Armed Bandits
+
+A bandit can be thought of as a slot machine with a lever. Pulling the lever can give you the reward, or give nothing.
+
+The multi-armed bandit can be seen as a set of real distributions $B = \{R_1, R_2, \dots, R_k\}$, each distribution being associated with rewards delivered by one of the $K$ levers.
+
+Let $\mu_1, \dots, \mu_k$ be the mean values associated with these reward distributions. The gambler iteratively plays one lever per round and observes the associated reward. The objective is to maximize the sum of collected rewards.
+
+The bandit problem is formally equivalent to a one-state MDP. The regret $\rho$ after $T$ rounds is defined as the expected difference between the reward sum of an optimal strategy and the sum of the collected rewards:
+
+$$
+\large
+\rho = T\mu^* - \sum_{t=1}^{T} \hat{r}_t
+$$
+
+where $\mu^*$ is the maximal reward, $\mu^* = \max\limits_{k}\{\mu_k\}$, and $\hat{r}_t$ is the reward in round $t$.
+
+A common formulation is the Binary multi-armed bandit, or the **Bernoulli multi-armed bandit**, which issues a reward of 1 with probability $p$, and 0 otherwise.
+:::
+
+Let $v_a$ be the average reward obtained by taking action $a$. Then, in UCB-1, we taken actions in proportion to
+
+$$
+\tilde{v}_a = v_a + \sqrt{\frac{2 \log N}{n_a}}
+$$
+
+where
+
+- $N$ = number of time steps so far
+- $n_a$ = number of times action $a$ has been taken
+
+Clearly, UCB-1 strategy will focus on exploring actions which haven't been taken at all. [This is because $n_a = 0$ for such an action.]
+
+As both $N$ and all $n_a$ grow, $\tilde{v}$ approaches $v_a$. Then, we are just left to exploit the optimal actions.
+
 
 ### Bayesian UCB
 
@@ -121,3 +170,7 @@ There is a much more complex method, which uses Bayesian Neural Networks. Here, 
 The advantage of Bayesian UCB over UCB is that we can choose any distribution we want and learn an actual distribution, not just the upper bound (which comes from an inequality anyway).
 
 However, it could happen that the Prior does not work at all in the given situation. Without proper domain knowledge, Bayesian UCB may not perform as well. For example, we choose a unimodal prior when in reality the distribution looks like bimodal.
+
+## Comparing Regret
+
+![](https://i.imgur.com/J8pcuvk.png)
